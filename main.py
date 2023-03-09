@@ -105,10 +105,20 @@ def go(config: DictConfig):
 
             # NOTE: use the rf_config we just created as the rf_config parameter for the train_random_forest
             # step
+            _ = mlflow.run(
+                os.path.join(hydra.utils.get_original_cwd(), "src", "train_random_forest"),
+                "main",
+                parameters={
+                    "trainval_artifact": "clean_sample.csv:latest",
+                    "val_size": "clean_sample.csv:reference",
+                    "random_seed": config['data_check']['kl_threshold'],
+                    "stratify_by": config['etl']['min_price'],
+                    "rf_config": rf_config,
+                    "max_tfidf_features":,
+                    "output_artifact":
+                },
+            )
 
-            ##################
-            # Implement here #
-            ##################
 
             pass
 
