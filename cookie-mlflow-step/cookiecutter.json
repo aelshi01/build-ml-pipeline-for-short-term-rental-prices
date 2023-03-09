@@ -5,4 +5,5 @@
 	"short_description": "My step",
 	"long_description": "An example of a step using MLflow and Weights & Biases",
 	"parameters": "parameter1,parameter2"
+	
 }
