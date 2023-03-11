@@ -46,7 +46,7 @@ def go(args):
     # Get the Random Forest configuration and update W&B
     with open(args.rf_config) as fp:
         rf_config = json.load(fp)
-    run.config.update(rf_config)
+    run.config.update(rf_config,allow_val_change=True)
 
     # Fix the random seed for the Random Forest, so we get reproducible results
     rf_config['random_state'] = args.random_seed
@@ -89,12 +89,12 @@ def go(args):
         shutil.rmtree("random_forest_dir")
 
     # Save the sk_pipe pipeline as a mlflow.sklearn model in the directory "random_forest_dir"
-    mlflow.sklearn.save_model(sk_pipe,random_forest_dir)
+    mlflow.sklearn.save_model(sk_pipe,'random_forest_dir')
 
     # Upload the model we just exported to W&B
     artifact = wandb.Artifact(args.output_artifact,type="model_export",description="uploading random forest model", metadata=rf_config)
     artifact.add_dir("random_forest_dir")
-    run.log_artifact
+    wandb.log_artifact(artifact)
 
     # Plot feature importance
     fig_feat_imp = plot_feature_importance(sk_pipe, processed_features)
