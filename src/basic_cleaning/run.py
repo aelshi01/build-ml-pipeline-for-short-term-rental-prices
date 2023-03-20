@@ -19,11 +19,7 @@ def go(args):
 
     # Download input artifact. This will also log that this script is using this
     # particular version of the artifact
-    # artifact_local_path = run.use_artifact(args.input_artifact).file()
 
-    ######################
-    # YOUR CODE HERE     #
-    ######################
     logger.info("Downloading and preparing artifact")
     artifact_local_path = run.use_artifact(args.input_artifact).file()
     logger.info("loading csv file with pandas")

@@ -60,7 +60,24 @@ def test_similar_neigh_distrib(data: pd.DataFrame, ref_data: pd.DataFrame, kl_th
     assert scipy.stats.entropy(dist1, dist2, base=2) < kl_threshold
 
 def test_row_count(data: pd.DataFrame):
+    """
+    Counting the rows by asserting a specific range the row count must return.
+
+    :param data: pandas data frame being passed through the function
+
+    """
     assert 15000 < data.shape[0] < 1000000
 
 def test_price_range(data: pd.DataFrame, min_price: float, max_price: float):
+    """
+    Making sure the price of a house is within the expected range for all houses, not only one.
+    If one house is outside the range it will flag it up since we are using the function all() that
+    will assert the condition on all prices not only one.
+
+    :param data: pandas data frame being passed through the function
+    :param min_price: float set for the minimum value a price can be
+    :param max_price: float set for the maximum value a price can be
+
+    :return: None if test pass, else will dispolay AssertionError
+    """
     assert data['price'].between(min_price,max_price).all()
